@@ -24,9 +24,10 @@
         <p>Autore: {{ p.expand.author.name  }}</p>
       </div>
     </div> -->
-    <div *ngFor="let p of posts">
-      <post-card [postObject]="p"></post-card>
-    </div>
+
+    <post-card [postObject]="p" *ngFor="let p of posts" (deleteEvent)="getPosts()" class="col-4 my-2"></post-card>
+
+    
     
   </div>
 

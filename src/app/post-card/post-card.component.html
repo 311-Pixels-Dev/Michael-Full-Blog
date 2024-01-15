@@ -1,7 +1,19 @@
-<div class="card col-4 m-3">
+<div class="card">
 	<div class="card-body">
-		<h5 class="card-title">{{ title }}</h5>
-		<p class="card-text"> {{ content }}</p>
+		<!-- Modifica titolo -->
+		<h5 class="card-title" *ngIf="editMode == false">{{ title }}</h5>
+		<h5 class="card-title" *ngIf="editMode"> <input type="text" [(ngModel)]="title" /> </h5>
+
+		<!-- Modifica contenuto -->
+		<p class="card-text" *ngIf="editMode == false"> {{ content }}</p>
+		<p class="card-text" *ngIf="editMode"> <textarea [(ngModel)]="content"></textarea> </p>
+
+		<!-- Autore -->
 		<p>Autore: {{ authorName }}</p>
+
+		<!-- Action Buttons -->
+		<button *ngIf="!editMode" class="btn btn-danger m-2" (click)="deletePost()">Del</button>
+		<button *ngIf="editMode == false" class="btn btn-warning" (click)="setEditMode()">Edi</button>
+		<button *ngIf="editMode" class="btn btn-success" (click)="editPost()">Salva modifiche</button>
 	</div>
 </div>
