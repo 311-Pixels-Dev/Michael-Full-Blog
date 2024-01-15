@@ -21,7 +21,7 @@ export class ApiService {
     let response = await axios.get(this.baseUrl + "/api/collections/posts/records?expand=author");
     let posts: Array<PostModel> = response.data.items.map((item: any) => {
       return {
-        author: item.expand.author,
+        author: item.expand?.author || undefined,
         id: item.id,
         title: item.title,
         content: item.content,
