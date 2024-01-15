@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import axios from 'axios';
 import PostModel from '../models/PostModel';
 import UserModel from '../models/UserModel';
+import CreatePostModel from '../models/CreatePostModel';
 
 @Injectable({
   providedIn: 'root'
@@ -30,7 +31,7 @@ export class ApiService {
     return posts;
   }
 
-  async publishPost(post: PostModel): Promise<void>  {
+  async publishPost(post: CreatePostModel): Promise<void>  {
     await axios.post(this.baseUrl + "/api/collections/posts/records", post);
   }
 

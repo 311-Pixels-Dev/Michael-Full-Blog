@@ -5,6 +5,9 @@ import { PostCardComponent } from './post-card/post-card.component';
 
 import axios from 'axios';
 import { FormsModule } from '@angular/forms';
+import { ApiService } from './api.service';
+import PostModel from '../models/PostModel';
+import CreatePostModel from '../models/CreatePostModel';
 
 @Component({
   selector: 'app-root',
@@ -19,6 +22,7 @@ export class AppComponent implements OnInit {
     this.getPosts();
   }
 
+  apiService: ApiService;
 
   title = 'blog';
 
@@ -27,19 +31,25 @@ export class AppComponent implements OnInit {
   newPostTitle: string = "";
   newPostContent: string = "";
 
+  constructor(apiService: ApiService) {
+    this.apiService = apiService;
+  }
+
   async publishPost() {
-    await axios.post("http://localhost:8090/api/collections/posts/records", {
+    let post: CreatePostModel = {
       title: this.newPostTitle,
-      content: this.newPostContent
-    })
+      content: this.newPostContent,
+      date: "",
+      author: undefined
+    }
+    await this.apiService.publishPost(post);
     this.getPosts();
     this.newPostContent = "";
     this.newPostTitle = "";
   }
 
   async getPosts() {
-    let response = await axios.get("http://localhost:8090/api/collections/posts/records");
-    this.posts = response.data.items;
+    this.posts = await this.apiService.getPosts();
   }
 
 }

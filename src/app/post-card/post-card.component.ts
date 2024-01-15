@@ -13,14 +13,10 @@ import PostModel from '../../models/PostModel';
   styleUrl: './post-card.component.css'
 })
 export class PostCardComponent implements OnInit {
-  @Input() postObject: PostModel | undefined;
+  @Input({required: true}) postObject!: PostModel;
   @Output() deleteEvent: EventEmitter<void> = new EventEmitter();
 
-  id: string = "";
-  title: string = "";
-  content: string = "";
-  authorName: string = "";
-  date: string = "";
+  authorName: string = "anonimo";
 
   apiService: ApiService;
   editMode: boolean = false;
@@ -30,16 +26,11 @@ export class PostCardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.authorName = this.postObject?.author?.name || "anonimo";
-  }
-
-  async getAuthorName(id: string) {
-    let user = await this.apiService.getUserById(id);
-    this.authorName = user.name;
+    this.authorName = this.postObject.author?.name || "anonimo";
   }
 
   async deletePost() {
-    await axios.delete("http://localhost:8090/api/collections/posts/records/" + this.id);
+    await this.apiService.deletePost(this.postObject.id);
     this.deleteEvent.emit();
   }
 
@@ -48,10 +39,7 @@ export class PostCardComponent implements OnInit {
   }
 
   async editPost() {
-    await axios.patch("http://localhost:8090/api/collections/posts/records/" + this.id, {
-      title: this.title,
-      content: this.content
-    })
+    await this.apiService.editPost(this.postObject);
     this.editMode = false;
     this.deleteEvent.emit();
   }
