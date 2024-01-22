@@ -1,0 +1,49 @@
+<div class="container">
+
+  <div class="row d-flex justify-content-center">
+    <div class="col-12 text-center">
+      <div class="display-4">
+        FEED
+      </div>
+    </div>
+  </div>
+
+  <div class="row d-flex">
+    <!-- <ul>
+      <li *ngFor="let p of posts">
+        {{ p.content }}
+
+        <span [innerHTML]="p.content"></span>
+      </li>
+    </ul> -->
+    <!-- <div class="card col-4 m-3" *ngFor="let p of posts">
+      <div class="card-body">
+        <h5 class="card-title">{{ p.title }}</h5>
+        <p class="card-text"> {{p.content}}</p>
+        <p>Autore: {{ p.expand.author.name  }}</p>
+      </div>
+    </div> -->
+
+    <post-card [postObject]="p" *ngFor="let p of posts" (deleteEvent)="getPosts()" class="col-4 my-2"></post-card>
+
+    
+    
+  </div>
+
+  <div class="row d-flex justify-content-center text-center">
+    <div class="display-4">
+      Crea post
+    </div>
+
+    <div class="mb-3">
+      <label for="exampleFormControlInput1" class="form-label">Titolo</label>
+      <input type="text" class="form-control" id="exampleFormControlInput1" [(ngModel)]="newPostTitle">
+    </div>
+    <div class="mb-3">
+      <label for="exampleFormControlTextarea1" class="form-label">Contenuto</label>
+      <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" [(ngModel)]="newPostContent"></textarea>
+    </div>
+    <button class="btn btn-primary" (click)="publishPost()">Pubblica</button>
+  </div>
+
+</div>
