@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { PostCardComponent } from '../post-card/post-card.component';
 import CreatePostModel from '../../models/CreatePostModel';
+import { StoreService } from '../store.service';
 
 @Component({
   selector: 'app-posts-page',
@@ -19,6 +20,7 @@ export class PostsPageComponent implements OnInit {
   }
 
   apiService: ApiService;
+  storeService: StoreService;
 
   title = 'blog';
 
@@ -27,8 +29,13 @@ export class PostsPageComponent implements OnInit {
   newPostTitle: string = "";
   newPostContent: string = "";
 
-  constructor(apiService: ApiService) {
+  constructor(apiService: ApiService, storeService: StoreService) {
     this.apiService = apiService;
+    this.storeService = storeService;
+  }
+
+  isLogged() {
+    return this.storeService.isLogged();
   }
 
   async publishPost() {
